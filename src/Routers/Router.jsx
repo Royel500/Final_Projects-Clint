@@ -14,6 +14,7 @@ import AboutUs from '../Components/About';
 import PricingCalculator from '../Components/PricingCalculator';
 import { path } from 'framer-motion/client';
 import Services from '../Components/Services';
+import SendPercel from '../Components/SendPercel';
 
 
 
@@ -39,7 +40,12 @@ import Services from '../Components/Services';
           element:<PricingCalculator></PricingCalculator>
         },
       {  path:'/services',
-        element: <Services></Services>}
+        element: <Services></Services>
+      },
+      {
+        path:'/sendpercel' ,
+        element:<SendPercel></SendPercel>
+      }
     ]
   },
   {
