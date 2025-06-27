@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {  } from 'react';
 import { useForm } from 'react-hook-form';
 import  { Toaster } from 'react-hot-toast';
 import { format } from 'date-fns';
@@ -8,8 +8,8 @@ import useAuth from './../hooks/useAuth';
 
 const SendPercel = ({ currentUser }) => {
   const { register, handleSubmit, watch,  reset, formState: { errors } } = useForm();
-  const [deliveryCost, setDeliveryCost] = useState(null);
-  const [pendingData, setPendingData] = useState(null);
+  // const [deliveryCost, setDeliveryCost] = useState(null);
+  // const [pendingData, setPendingData] = useState(null);
   
   const {user} =useAuth();
 
@@ -55,7 +55,7 @@ const onSubmit = async (data) => {
       creation_date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       deliveryCost: cost,
       pyment_status:'unpaid',
-      userEmail:user.email,
+    CreateBy: user?.email, 
 
     };
 

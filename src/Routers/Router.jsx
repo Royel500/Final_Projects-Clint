@@ -12,9 +12,11 @@ import Register from '../Pages/Authentication/Register';
 import Map from '../Pages/Map/Map';
 import AboutUs from '../Components/About';
 import PricingCalculator from '../Components/PricingCalculator';
-import { path } from 'framer-motion/client';
 import Services from '../Components/Services';
 import SendPercel from '../Components/SendPercel';
+import PrivateRoute from './PrivateRoute';
+import DasboardLayout from '../LayOuts/DasboardLayout';
+import MyPercel from '../Components/MyPercel';
 
 
 
@@ -61,5 +63,17 @@ import SendPercel from '../Components/SendPercel';
         element:<Register></Register>
       }
     ]
+  },
+  {
+    path:'/dasboard',
+    element:<PrivateRoute>
+      <DasboardLayout></DasboardLayout>
+    </PrivateRoute>,
+ children:[
+  {
+    path:'myPercel',
+    element:<MyPercel></MyPercel>
+  }
+ ]
   }
 ]);
