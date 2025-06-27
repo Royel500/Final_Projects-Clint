@@ -1,17 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink, useNavigate } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 import GoogleLogIn from './GoogleLogIn';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 
 const LogIn = () => {
     const {register,handleSubmit,  formState: { errors },} = useForm();
-   const {user,signIn} = useAuth();
+   const {signIn} = useAuth();
+   
   const navigate = useNavigate();
+   const location = useLocation();
+  const from = location.state?.from || '/' ;
 
     const onSubmitt = data =>{
-        console.log(data);
 
         signIn(data.email,data.password)
         .then( () =>{
@@ -20,7 +22,7 @@ const LogIn = () => {
   icon: "success",
   draggable: true
 });
-  navigate('/');
+  navigate(from);
         })
               .catch(err => {
                  Swal.fire({

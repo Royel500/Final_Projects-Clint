@@ -8,22 +8,34 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 
 const MyPercel = () => {
     const {user} =useAuth();
+const navigate = useNavigate();
+
     const axiosSecure = useAxiosecure();
       const queryClient = useQueryClient();
 
    const {data:parcels=[]} = useQuery({
     queryKey:['my-parcels' , user.email],
     queryFn:async () =>{
-const res = await axiosSecure.get(`/sendPercel?email=${user.email}`);
+const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`);
         return res.data;
     }
    });
 
 
+  //  -----View---------
+   const handleView =(id)=>{
+
+   }
+// __Payment------
+   const handlePay = (id) =>{
+  navigate(`/dasboard/payment/${id}`)
+   }
+// ----DELETE------
      const handleDelete = async (_id) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -60,10 +72,11 @@ const res = await axiosSecure.get(`/sendPercel?email=${user.email}`);
             <th>Weight</th>
             <th>Cost</th>
             <th>Payment</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {parcels.map((parcel, index) => (
+          {parcels?.map((parcel, index) => (
             <tr key={parcel._id}>
               <td>{index + 1}</td>
               <td>{parcel.title}</td>
@@ -82,8 +95,14 @@ const res = await axiosSecure.get(`/sendPercel?email=${user.email}`);
               </td>
                        <td>
                 <div className="flex gap-1">
-                  <button className="btn btn-xs btn-outline btn-info">View</button>
-                  <button className="btn btn-xs btn-outline btn-warning">Edit</button>
+                  <button
+                   onClick={() =>handleView(parcel._id)}
+                   className="btn btn-xs btn-outline btn-info">View</button>
+
+                  <button 
+                  onClick={() =>handlePay(parcel._id)}
+                   className="btn btn-xs btn-outline btn-warning">Pay</button>
+                   
                   <button
                     onClick={() => handleDelete(parcel._id)}
                     className="btn btn-xs btn-outline btn-error"

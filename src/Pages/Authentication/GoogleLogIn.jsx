@@ -1,24 +1,26 @@
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
-import { Navigate, useNavigate } from 'react-router';
+import { Navigate, useLocation, useNavigate } from 'react-router';
 
 const GoogleLogIn = () => {
-const navigate =  useNavigate();
+  const navigate = useNavigate();
+   const location = useLocation();
+  const from = location.state?.from || '/' ;
     const {googleMama} =useAuth();
 
 
     const handleGoole = () =>{
    
         googleMama()
-        .then(res =>{
+        .then(() =>{
 
         Swal.fire({
   title: "Drag me!",
   icon: "success",
   draggable: true
 });
-navigate('/');
+navigate(from);
 
         })
            .catch(err => {

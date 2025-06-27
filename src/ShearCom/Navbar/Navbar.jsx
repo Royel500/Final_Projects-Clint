@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Link, useNavigate } from 'react-router';
+import { NavLink, Link, useNavigate, } from 'react-router';
 import Logo from '../Logo';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
@@ -7,6 +7,8 @@ import './navbar.css'
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const navigate = useNavigate();
+ 
+
 
   const logOutt = () => {
     logOut()

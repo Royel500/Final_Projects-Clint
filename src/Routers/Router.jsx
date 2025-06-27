@@ -17,6 +17,7 @@ import SendPercel from '../Components/SendPercel';
 import PrivateRoute from './PrivateRoute';
 import DasboardLayout from '../LayOuts/DasboardLayout';
 import MyPercel from '../Components/MyPercel';
+import Payment from '../Payment/Payment ';
 
 
 
@@ -73,6 +74,10 @@ import MyPercel from '../Components/MyPercel';
   {
     path:'myPercel',
     element:<MyPercel></MyPercel>
+  },
+  {
+    path:'payment/:parcelId',
+    element:<Payment></Payment>
   }
  ]
   }
