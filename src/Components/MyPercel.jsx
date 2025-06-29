@@ -23,6 +23,7 @@ const navigate = useNavigate();
     queryFn:async () =>{
 const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`);
         return res.data;
+        
     }
    });
 
@@ -89,8 +90,8 @@ const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`);
             
               <td>৳{parcel.deliveryCost}</td>
               <td>
-                <span className={`badge ${parcel.pyment_status === 'paid' ? 'badge-success' : 'badge-error'}`}>
-                  {parcel.pyment_status}
+                <span className={`badge ${parcel.payment_status === 'paid' ? 'badge-success' : 'badge-error'}`}>
+                  {parcel.payment_status}
                 </span>
               </td>
                        <td>

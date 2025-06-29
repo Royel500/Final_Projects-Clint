@@ -54,7 +54,7 @@ const onSubmit = async (data) => {
       ...data,
       creation_date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       deliveryCost: cost,
-      pyment_status:'unpaid',
+      payment_status:'unpaid',
     CreateBy: user?.email, 
 
     };
