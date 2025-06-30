@@ -18,6 +18,8 @@ import PrivateRoute from './PrivateRoute';
 import DasboardLayout from '../LayOuts/DasboardLayout';
 import MyPercel from '../Components/MyPercel';
 import Payment from '../Payment/Payment ';
+import PaymentHistory from '../Payment/PaymentHistory';
+import Track from '../Components/Track';
 
 
 
@@ -78,6 +80,14 @@ import Payment from '../Payment/Payment ';
   {
     path:'payment/:parcelId',
     element:<Payment></Payment>
+  },
+  {
+    path:'paymenthistory',
+    element:<PaymentHistory></PaymentHistory>
+  },
+  {
+    path:'track',
+    element:<Track></Track>
   }
  ]
   }

@@ -43,7 +43,8 @@ const DasboardLayout = () => {
           {/* Sidebar content here */}
           <li><NavLink to='/'>Home</NavLink></li>
           <li><NavLink to='/dasboard/myPercel'>My Parcels</NavLink></li>
-          <li><NavLink>Payment</NavLink></li>
+          <li><NavLink to='/dasboard/paymenthistory'>Hitory</NavLink></li>
+          <li><NavLink to='/dasboard/track'>Track a Package</NavLink></li>
         </ul>
       </div>
     </div>

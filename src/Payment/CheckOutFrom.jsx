@@ -91,7 +91,7 @@ const CheckOutFrom = () => {
           userEmail: user.email,
           amount: price,
           transactionId: result.paymentIntent.id,
-          payment_status: result.paymentIntent.payment_status,
+          status: 'succeeded',
           date: new Date(),
         });
 
