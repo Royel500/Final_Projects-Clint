@@ -67,7 +67,7 @@ const Register = () => {
 
       const userRes = await axiosIns.post('/api/users', userInfo);
       console.log("User saved:", userRes.data);
-
+  
       Swal.fire("Account Created!", "Welcome to the platform!", "success");
       navigate('/');
     } catch (err) {
