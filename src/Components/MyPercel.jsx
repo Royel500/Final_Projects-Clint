@@ -21,7 +21,8 @@ const navigate = useNavigate();
    const {data:parcels=[]} = useQuery({
     queryKey:['my-parcels' , user.email],
     queryFn:async () =>{
-const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`);
+const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`,);
+// const res = await axiosSecure.get(`/payments?email=${user?.email}`);
         return res.data;
         
     }
@@ -60,7 +61,6 @@ const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`);
       }
     });
   };
-   console.log(parcels)
      return (
     <div className="overflow-x-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">My Parcels</h2>

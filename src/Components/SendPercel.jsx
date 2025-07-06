@@ -136,10 +136,19 @@ const onSubmit = async (data) => {
         <fieldset className="border p-4 rounded-lg">
           <legend className="text-lg font-semibold">Sender Info</legend>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
-            <div>
-              <label className="label">Name</label>
-              <input type="text" className="input input-bordered w-full" value={currentUser?.name} disabled />
-            </div>
+<div>
+  <label className="label">Name</label>
+  <input
+  type="text"
+  className="input input-bordered w-full"
+  defaultValue={user?.displayName || ''}
+  {...register("senderName")}
+  readOnly
+/>
+
+  {errors.senderName && <span className="text-red-500 text-sm">Required</span>}
+</div>
+
             <div>
               <label className="label">Contact</label>
               <input type="text" className="input input-bordered w-full" {...register("senderContact", { required: true })} />
@@ -149,8 +158,14 @@ const onSubmit = async (data) => {
               <label className="label">Region</label>
               <select className="select select-bordered w-full" {...register("senderRegion", { required: true })}>
                 <option value="">Select Region</option>
-                <option value="Dhaka">Dhaka</option>
-                <option value="Chattogram">Chattogram</option>
+                <option value="dhaka">Dhaka</option>
+                <option value="chittagong">Chittagong</option>
+                <option value="rajshahi">Rajshahi</option>
+                <option value="khulna">Khulna</option>
+                <option value="sylhet">Sylhet</option>
+                <option value="barisal">Barisal</option>
+                <option value="rangpur">Rangpur</option>
+                <option value="mymensingh">Mymensingh</option>
               </select>
               {errors.senderRegion && <span className="text-red-500 text-sm">Required</span>}
             </div>
@@ -191,11 +206,17 @@ const onSubmit = async (data) => {
               {errors.receiverContact && <span className="text-red-500 text-sm">Required</span>}
             </div>
             <div>
-              <label className="label">Region</label>
+              <label className="label">District</label>
               <select className="select select-bordered w-full" {...register("receiverRegion", { required: true })}>
                 <option value="">Select Region</option>
-                <option value="Dhaka">Dhaka</option>
-                <option value="Chattogram">Chattogram</option>
+                <option value="dhaka">Dhaka</option>
+                <option value="chittagong">Chittagong</option>
+                <option value="rajshahi">Rajshahi</option>
+                <option value="khulna">Khulna</option>
+                <option value="sylhet">Sylhet</option>
+                <option value="barisal">Barisal</option>
+                <option value="rangpur">Rangpur</option>
+                <option value="mymensingh">Mymensingh</option>
               </select>
               {errors.receiverRegion && <span className="text-red-500 text-sm">Required</span>}
             </div>

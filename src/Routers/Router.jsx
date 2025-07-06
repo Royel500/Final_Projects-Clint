@@ -20,6 +20,15 @@ import MyPercel from '../Components/MyPercel';
 import Payment from '../Payment/Payment ';
 import PaymentHistory from '../Payment/PaymentHistory';
 import Track from '../Components/Track';
+import Rider from '../Components/Rider';
+import ActiveRiders from '../Components/ActiveRiders';
+import PendingRiders from '../Components/PendingRiderss';
+import RiderDetails from '../Components/Details';
+import MakeAdmin from '../Components/MakeAdmin';
+import AdminRoute from './AdminRoute';
+import AssignRider from '../Components/AssignRider';
+import RiderRoute from './RiderRoute';
+import PendingDelivery from '../Components/PendingDalivary';
 
 
 
@@ -50,6 +59,10 @@ import Track from '../Components/Track';
       {
         path:'/sendpercel' ,
         element:<SendPercel></SendPercel>
+      },
+      {
+        path:'/rider',
+        element:<Rider></Rider>
       }
     ]
   },
@@ -73,6 +86,11 @@ import Track from '../Components/Track';
       <DasboardLayout></DasboardLayout>
     </PrivateRoute>,
  children:[
+  
+  {
+    index:true,
+    element:<MyPercel></MyPercel>
+  },
   {
     path:'myPercel',
     element:<MyPercel></MyPercel>
@@ -88,7 +106,32 @@ import Track from '../Components/Track';
   {
     path:'track',
     element:<Track></Track>
+  },
+  {
+    path:'activeRider',
+    element: <AdminRoute>  <ActiveRiders></ActiveRiders></AdminRoute>
+  },
+  {
+    path:'pendingRider',
+    element: <AdminRoute><PendingRiders></PendingRiders> </AdminRoute> 
+  },
+  {
+    path:'rider/:id',
+    element: <AdminRoute><RiderDetails></RiderDetails> </AdminRoute> 
+  },
+  {
+    path:'makeAdmin',
+    element: <AdminRoute> <MakeAdmin></MakeAdmin></AdminRoute> 
+  },
+  {
+    path:'assign-rider',
+    element:<AdminRoute> <AssignRider></AssignRider> </AdminRoute>
+  },
+  {
+    path:'pendingDelivery',
+    element:<RiderRoute><PendingDelivery></PendingDelivery> </RiderRoute> 
   }
+
  ]
   }
 ]);
