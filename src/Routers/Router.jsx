@@ -29,6 +29,10 @@ import AdminRoute from './AdminRoute';
 import AssignRider from '../Components/AssignRider';
 import RiderRoute from './RiderRoute';
 import PendingDelivery from '../Components/PendingDalivary';
+import RoleCheck from '../Components/RoleCkec';
+import AdminOverview from '../Components/AdminOverview';
+import UserProfile from '../Components/UserProfile';
+
 
 
 
@@ -86,10 +90,17 @@ import PendingDelivery from '../Components/PendingDalivary';
       <DasboardLayout></DasboardLayout>
     </PrivateRoute>,
  children:[
-  
   {
     index:true,
-    element:<MyPercel></MyPercel>
+    element:<RoleCheck></RoleCheck>
+  },
+  {
+   path:'adminProfile',
+   element:<AdminOverview/>
+  },
+  {
+  path:'manageProfile',
+  element:<UserProfile/>
   },
   {
     path:'myPercel',
@@ -107,6 +118,7 @@ import PendingDelivery from '../Components/PendingDalivary';
     path:'track',
     element:<Track></Track>
   },
+
   {
     path:'activeRider',
     element: <AdminRoute>  <ActiveRiders></ActiveRiders></AdminRoute>

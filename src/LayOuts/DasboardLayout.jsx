@@ -76,11 +76,22 @@ const DasboardLayout = () => {
               <FaMapMarkedAlt className="text-lg" /> Track a Package
             </NavLink>
           </li>
-
+{/* ---User role-- */}
+{!roleLoading && role === "user"  && 
+<>
+<li>
+            <NavLink to="/dasboard/manageProfile" className="flex items-center gap-2">
+              <FaMapMarkedAlt className="text-lg" /> Manage Profile   </NavLink>
+          </li>
+</>}
               {/* ---rider link */}
 
           {!roleLoading && role === 'rider' && 
           <>
+<li>
+            <NavLink to="/dasboard/manageProfile" className="flex items-center gap-2">
+              <FaMapMarkedAlt className="text-lg" /> Manage Profile   </NavLink>
+          </li>
           <li>
   <NavLink to="/dasboard/pendingDelivery" className="flex items-center gap-2">
     <FaTruck className="text-lg" /> Pending Delivery
@@ -91,6 +102,12 @@ const DasboardLayout = () => {
           {/* ---admin links---- */}
       { !roleLoading && role=== 'admin' &&
         <>
+
+            <li>
+            <NavLink to="/dasboard/adminProfile" className="flex items-center gap-2">
+              <FaUserFriends className="text-lg" /> Manage profile
+            </NavLink>
+          </li>
             <li>
             <NavLink to="/dasboard/activeRider" className="flex items-center gap-2">
               <FaUserFriends className="text-lg" /> Active Riders

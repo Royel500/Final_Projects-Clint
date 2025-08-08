@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../FireBase/FireBase_Auth';
 
 const AuthProvider = ({children}) => {
@@ -44,6 +44,12 @@ const googleMama = () =>{
         setLoading(true);
       return signOut(auth);
     }
+    // Add this function
+const profileUpdate = (profile) => {
+  if (!auth.currentUser) return Promise.reject("No user");
+  return updateProfile(auth.currentUser, profile);
+};
+
 
 useEffect( ()=>{
     const unsubscribe = onAuthStateChanged(auth,currentUser =>{
@@ -64,6 +70,7 @@ useEffect( ()=>{
        createUser,
        signIn,
        logOut,
+       profileUpdate,
        googleMama,
     
     }
