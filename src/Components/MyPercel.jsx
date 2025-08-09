@@ -72,6 +72,7 @@ const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`,);
             <th>Type</th>
             <th>Weight</th>
             <th>Cost</th>
+            <th>Delivery_Status</th>
             <th>Payment</th>
             <th>Action</th>
           </tr>
@@ -89,6 +90,7 @@ const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`,);
               <td>{parcel.weight}kg</td>
             
               <td>৳{parcel.deliveryCost}</td>
+              <td>{parcel.delivery_status}</td>
               <td>
                 <span className={`badge ${parcel.payment_status === 'paid' ? 'badge-success' : 'badge-error'}`}>
                   {parcel.payment_status}

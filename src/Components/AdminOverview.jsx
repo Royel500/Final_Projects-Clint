@@ -7,6 +7,7 @@ import { FaChartLine, FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router';
 import useAxiosecure from '../hooks/useAxiosecure';
 import useAuth from '../hooks/useAuth';
+import Loading from './Loading';
 
 const AdminOverview = () => {
   const [overview, setOverview] = useState({
@@ -61,14 +62,7 @@ const AdminOverview = () => {
   }, [axiosSecure]);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-lg font-semibold text-gray-700">Loading dashboard...</p>
-        </div>
-      </div>
-    );
+    return <Loading></Loading>;
   }
 
   if (error) {
@@ -93,7 +87,7 @@ const AdminOverview = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">
-            Welcome back, <span className="text-blue-600">{user?.displayName || 'Admin'}</span>!
+            Welcome back, <span className="text-blue-600 italic">Admin {user?.displayName}</span> !
           </h1>
           <p className="text-gray-500 mt-2">
             Here's what's happening with your delivery business today.

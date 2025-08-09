@@ -1,44 +1,133 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import rider from '../../public/agent-pending.png';
+import pending from '../../public/agent-pending.png';// Add a pending image
+import Swal from "sweetalert2";
 import useAxiosecure from "../hooks/useAxiosecure";
 import useAuth from "../hooks/useAuth";
-import Swal from "sweetalert2";
 
 const Rider = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosecure();
+  const [hasApplied, setHasApplied] = useState(false);
+  const [applicationStatus, setApplicationStatus] = useState('');
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    reset
+  } = useForm({
+    defaultValues: {
+      name: user?.displayName || '',
+      email: user?.email || ''
+    }
+  });
 
-  const axiosSecure = useAxiosecure();
-  const {user} =useAuth();
-
-
+  // Check if user has already applied
+  useEffect(() => {
+    if (user?.email) {
+      axiosSecure.get(`/riders/check?email=${user.email}`)
+        .then(res => {
+          if (res.data.exists) {
+            setHasApplied(true);
+            setApplicationStatus(res.data.status); // 'pending', 'approved', or 'rejected'
+          }
+        })
+        .catch(err => console.error('Error checking application:', err));
+    }
+  }, [user, axiosSecure]);
 
   const onSubmit = (data) => {
-   const riderData = {
-    ...data,
-    // name:user?.displayName || '',
-    // email:user?.email || '',
-    status: 'pending',
-    created_at:new Date().toISOString(),
-   }
-   console.log(riderData)
-   axiosSecure.post('/riders' , riderData)
-   .then(res =>{
-    if(res.data.insertedId){
-        Swal.fire({
-    icon: 'success',
-    title: 'Application Submitted!',
-    text: 'Thank you for registering as a rider. We will contact you soon.',
-    confirmButtonColor: '#84cc16', // lime-500
-  });
-    }
-   })
-
+    const riderData = {
+      ...data,
+      status: 'pending',
+      created_at: new Date().toISOString(),
+    };
+    
+    axiosSecure.post('/riders', riderData)
+      .then(res => { 
+        if(res.data.insertedId) {
+          setHasApplied(true);
+          setApplicationStatus('pending');
+          Swal.fire({
+            icon: 'success',
+            title: 'Application Submitted!',
+            text: 'Thank you for registering as a rider. We will contact you soon.',
+            confirmButtonColor: '#84cc16',
+          });
+        }
+      });
   };
+
+  // Backend API endpoint needed (add this to your server)
+  /*
+  app.get('/riders/check', async (req, res) => {
+    const email = req.query.email;
+    const rider = await riderCollection.findOne({ email });
+    res.json({ 
+      exists: !!rider,
+      status: rider?.status || ''
+    });
+  });
+  */
+
+  if (hasApplied) {
+    return (
+      <div className="bg-gray-100 min-h-screen flex items-center justify-center px-4 py-8">
+        <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full p-8 text-center">
+          <img src={pending} alt="Pending Approval" className="mx-auto w-64 mb-6" />
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            {applicationStatus === 'pending' ? 'Application Pending' : 
+             applicationStatus === 'approved' ? 'Application Approved!' : 'Application Status'}
+          </h2>
+          
+          <div className="space-y-4 mb-6">
+            {applicationStatus === 'pending' && (
+              <>
+                <p className="text-gray-600">
+                  Your rider application is under review. We'll notify you once it's processed.
+                </p>
+                <div className="badge badge-warning p-4">Status: Pending Approval</div>
+              </>
+            )}
+            
+            {applicationStatus === 'approved' && (
+              <>
+                <p className="text-gray-600">
+                  Congratulations! Your rider application has been approved.
+                </p>
+                <div className="badge badge-success p-4">Status: Approved</div>
+                <button className="btn btn-primary mt-4">
+                  Go to Rider Dashboard
+                </button>
+              </>
+            )}
+            
+            {applicationStatus === 'rejected' && (
+              <>
+                <p className="text-gray-600">
+                  We're sorry, your application wasn't approved this time.
+                </p>
+                <div className="badge badge-error p-4">Status: Not Approved</div>
+                <p className="text-sm text-gray-500 mt-2">
+                  You may contact support for more information.
+                </p>
+              </>
+            )}
+          </div>
+          
+          <div className="divider">OR</div>
+          <button 
+            className="btn btn-ghost text-blue-600"
+            onClick={() => setHasApplied(false)}
+          >
+            View Application Details
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center px-4 py-8">
@@ -54,12 +143,15 @@ const Rider = () => {
             {/* Name and Email */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
+              
                 {...register("name", { required: true })}
                 type="text"
+
                 placeholder="Full Name"
                 className="input input-bordered w-full"
               />
               <input
+             
                 {...register("email", { required: true })}
                 type="email"
                 placeholder="Email Address"
@@ -90,23 +182,14 @@ const Rider = () => {
             </div>
 
             {/* Region and District */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <select
+            <div className="grid grid-cols-1  gap-4">
+            
+
+             <select
                 {...register("region", { required: true })}
                 className="select select-bordered w-full"
               >
                 <option value="">Select Region</option>
-                <option value="north">North</option>
-                <option value="south">South</option>
-                <option value="east">East</option>
-                <option value="west">West</option>
-              </select>
-
-              <select
-                {...register("district", { required: true })}
-                className="select select-bordered w-full"
-              >
-                <option value="">Select District</option>
                 <option value="dhaka">Dhaka</option>
                 <option value="chittagong">Chittagong</option>
                 <option value="rajshahi">Rajshahi</option>

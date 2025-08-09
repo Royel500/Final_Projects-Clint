@@ -32,6 +32,7 @@ import PendingDelivery from '../Components/PendingDalivary';
 import RoleCheck from '../Components/RoleCkec';
 import AdminOverview from '../Components/AdminOverview';
 import UserProfile from '../Components/UserProfile';
+import AdminPaymentList from '../Payment/AdminPamentList';
 
 
 
@@ -122,6 +123,10 @@ import UserProfile from '../Components/UserProfile';
   {
     path:'activeRider',
     element: <AdminRoute>  <ActiveRiders></ActiveRiders></AdminRoute>
+  },
+  {
+    path:'adminPaymentList',
+    element: <AdminRoute>  <AdminPaymentList></AdminPaymentList>  </AdminRoute>
   },
   {
     path:'pendingRider',

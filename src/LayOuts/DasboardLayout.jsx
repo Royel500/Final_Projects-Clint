@@ -10,6 +10,7 @@ import {
   FaTruck,
 } from 'react-icons/fa';
 import useRole from '../hooks/useRole';
+import Payment from './../Payment/Payment ';
 
 const DasboardLayout = () => {
  
@@ -66,11 +67,7 @@ const DasboardLayout = () => {
               <FaBoxOpen className="text-lg" /> My Parcels
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/dasboard/paymenthistory" className="flex items-center gap-2">
-              <FaHistory className="text-lg" /> History
-            </NavLink>
-          </li>
+    
           <li>
             <NavLink to="/dasboard/track" className="flex items-center gap-2">
               <FaMapMarkedAlt className="text-lg" /> Track a Package
@@ -79,9 +76,15 @@ const DasboardLayout = () => {
 {/* ---User role-- */}
 {!roleLoading && role === "user"  && 
 <>
+
 <li>
             <NavLink to="/dasboard/manageProfile" className="flex items-center gap-2">
               <FaMapMarkedAlt className="text-lg" /> Manage Profile   </NavLink>
+          </li>
+                <li>
+            <NavLink to="/dasboard/paymenthistory" className="flex items-center gap-2">
+              <FaHistory className="text-lg" />Payment History
+            </NavLink>
           </li>
 </>}
               {/* ---rider link */}
@@ -97,6 +100,11 @@ const DasboardLayout = () => {
     <FaTruck className="text-lg" /> Pending Delivery
   </NavLink>
 </li>
+      <li>
+            <NavLink to="/dasboard/paymenthistory" className="flex items-center gap-2">
+              <FaHistory className="text-lg" />Payment History
+            </NavLink>
+          </li>
 
           </>}
           {/* ---admin links---- */}
@@ -108,6 +116,12 @@ const DasboardLayout = () => {
               <FaUserFriends className="text-lg" /> Manage profile
             </NavLink>
           </li>
+                <li>
+            <NavLink to="/dasboard/adminPaymentList" className="flex items-center gap-2">
+              <FaHistory className="text-lg" />Payment History
+            </NavLink>
+          </li>
+
             <li>
             <NavLink to="/dasboard/activeRider" className="flex items-center gap-2">
               <FaUserFriends className="text-lg" /> Active Riders
@@ -124,11 +138,12 @@ const DasboardLayout = () => {
             </NavLink>
           </li>
           <li>
-<NavLink
-  to="/dasboard/assign-rider"
->
-  🚚 Assign Rider
-</NavLink>
+            <NavLink
+              to="/dasboard/assign-rider"
+            >
+              🚚 Assign Rider
+            </NavLink>
+          
           </li>
 
         </>
