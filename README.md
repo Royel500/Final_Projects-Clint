@@ -1,6 +1,6 @@
 # React + Vite
 
-Live Link = https://final_projects-rs-.web.app
+Live Link = https://final-projects-30822.web.app
 
 📚 Features
 ⚛️ Built with React.js (functional components + hooks)
