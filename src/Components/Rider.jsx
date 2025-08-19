@@ -5,6 +5,7 @@ import pending from '../../public/agent-pending.png';// Add a pending image
 import Swal from "sweetalert2";
 import useAxiosecure from "../hooks/useAxiosecure";
 import useAuth from "../hooks/useAuth";
+import { Link } from "react-router";
 
 const Rider = () => {
   const { user } = useAuth();
@@ -88,19 +89,24 @@ const Rider = () => {
                 <p className="text-gray-600">
                   Your rider application is under review. We'll notify you once it's processed.
                 </p>
-                <div className="badge badge-warning p-4">Status: Pending Approval</div>
+                <div className="badge badge-warning p-4">Status: Pending </div>
               </>
             )}
             
-            {applicationStatus === 'approved' && (
+            {applicationStatus === 'active' && (
               <>
-                <p className="text-gray-600">
+                <p className="text-gray-600 mx-3">
                   Congratulations! Your rider application has been approved.
                 </p>
-                <div className="badge badge-success p-4">Status: Approved</div>
-                <button className="btn btn-primary mt-4">
+                <div className="flex gap-3 justify-center items-center">
+              <div className="badge badge-success  py-5 mt-2 ">Status: Approved</div>
+              <Link to={'/dasboard/manageProfile'}>
+          <button className="btn btn-primary mt-4">
                   Go to Rider Dashboard
                 </button>
+              </Link>  
+                </div>
+              
               </>
             )}
             

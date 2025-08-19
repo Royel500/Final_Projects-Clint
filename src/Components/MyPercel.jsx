@@ -1,44 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import useAxiosecure from '../hooks/useAxiosecure';
-import {
-  useQuery,
-  QueryClient,
-  useQueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
 
 
+// https://final10-mauve.vercel.app
+// http://https://assignment-12-server-indol-ten.vercel.app
+
+
 const MyPercel = () => {
-    const {user} =useAuth();
-const navigate = useNavigate();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosecure();
+  const queryClient = useQueryClient();
 
-    const axiosSecure = useAxiosecure();
-      const queryClient = useQueryClient();
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [selectedParcel, setSelectedParcel] = useState(null);
 
-   const {data:parcels=[]} = useQuery({
-    queryKey:['my-parcels' , user.email],
-    queryFn:async () =>{
-const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`,);
-// const res = await axiosSecure.get(`/payments?email=${user?.email}`);
-        return res.data;
-        
+  const { data: parcels = [] } = useQuery({
+    queryKey: ['my-parcels', user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`);
+      return res.data;
+    },
+  });
+
+  // ----- View Parcel -----
+  const handleView = async (id) => {
+    try {
+      const { data } = await axiosSecure.get(`/sendPercel/${id}`);
+      setSelectedParcel(data);
+      setIsViewModalOpen(true);
+    } catch (error) {
+      Swal.fire('Error', 'Failed to load parcel details.', 'error');
     }
-   });
+  };
 
+  // ----- Payment -----
+  const handlePay = (id) => {
+    navigate(`/dasboard/payment/${id}`);
+  };
 
-  //  -----View---------
-   const handleView =(id)=>{
-
-   }
-// __Payment------
-   const handlePay = (id) =>{
-  navigate(`/dasboard/payment/${id}`)
-   }
-// ----DELETE------
-     const handleDelete = async (_id) => {
+  // ----- Delete -----
+  const handleDelete = async (_id) => {
     Swal.fire({
       title: 'Are you sure?',
       text: 'This parcel will be permanently deleted!',
@@ -61,7 +67,8 @@ const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`,);
       }
     });
   };
-     return (
+
+  return (
     <div className="overflow-x-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">My Parcels</h2>
       <table className="table table-zebra w-full">
@@ -73,6 +80,7 @@ const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`,);
             <th>Weight</th>
             <th>Cost</th>
             <th>Delivery_Status</th>
+            <th>Delivery_Boy</th>
             <th>Payment</th>
             <th>Action</th>
           </tr>
@@ -83,29 +91,47 @@ const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`,);
               <td>{index + 1}</td>
               <td>{parcel.title}</td>
               <td>
-                <span className={`badge ${parcel.parcelType === 'document' ? 'badge-info' : 'badge-warning'}`}>
+                <span
+                  className={`badge ${
+                    parcel.parcelType === 'document'
+                      ? 'badge-info'
+                      : 'badge-warning'
+                  }`}
+                >
                   {parcel.parcelType}
                 </span>
               </td>
               <td>{parcel.weight}kg</td>
-            
               <td>৳{parcel.deliveryCost}</td>
               <td>{parcel.delivery_status}</td>
+              <td>{parcel.delivery_Boy}</td>
               <td>
-                <span className={`badge ${parcel.payment_status === 'paid' ? 'badge-success' : 'badge-error'}`}>
+                <span
+                  className={`badge ${
+                    parcel.payment_status === 'paid'
+                      ? 'badge-success'
+                      : 'badge-error'
+                  }`}
+                >
                   {parcel.payment_status}
                 </span>
               </td>
-                       <td>
+              <td>
                 <div className="flex gap-1">
                   <button
-                   onClick={() =>handleView(parcel._id)}
-                   className="btn btn-xs btn-outline btn-info">View</button>
+                    onClick={() => handleView(parcel._id)}
+                    className="btn btn-xs btn-outline btn-info"
+                  >
+                    View
+                  </button>
 
-                  <button 
-                  onClick={() =>handlePay(parcel._id)}
-                   className="btn btn-xs btn-outline btn-warning">Pay</button>
-                   
+                  <button
+                    onClick={() => handlePay(parcel._id)}
+                    className="btn btn-xs btn-outline btn-warning"
+                  >
+                    Pay
+                  </button>
+
                   <button
                     onClick={() => handleDelete(parcel._id)}
                     className="btn btn-xs btn-outline btn-error"
@@ -114,14 +140,50 @@ const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`,);
                   </button>
                 </div>
               </td>
-
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* View Parcel Modal */}
+      {isViewModalOpen && selectedParcel && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+            {/* Close button */}
+            <button
+              className="absolute top-2 right-2 text-gray-600 hover:text-red-500"
+              onClick={() => setIsViewModalOpen(false)}
+            >
+              ✖
+            </button>
+
+            <h2 className="text-xl font-bold mb-4">Parcel Details</h2>
+            <p>
+              <strong>Title:</strong> {selectedParcel.title}
+            </p>
+            <p>
+              <strong>Type:</strong> {selectedParcel.parcelType}
+            </p>
+            <p>
+              <strong>Weight:</strong> {selectedParcel.weight}kg
+            </p>
+            <p>
+              <strong>Cost:</strong> ৳{selectedParcel.deliveryCost}
+            </p>
+            <p>
+              <strong>Status:</strong> {selectedParcel.delivery_status}
+            </p>
+            <p>
+              <strong>Delivery Boy:</strong> {selectedParcel.delivery_Boy}
+            </p>
+            <p>
+              <strong>Payment:</strong> {selectedParcel.payment_status}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
-
 
 export default MyPercel;

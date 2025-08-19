@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosecure from '../hooks/useAxiosecure';
+import Swal from 'sweetalert2';
 
 const AssignRiderModal = ({ parcel, onClose, refetchParcels }) => {
   const axiosSecure = useAxiosecure();
@@ -19,7 +20,7 @@ const handleAssign = async (rider) => {
   if (
     parcel.senderRegion?.toLowerCase() !== rider.district?.toLowerCase()
   ) {
-    alert('Sender region and rider district do not match!');
+    Swal('Sender region and rider district do not match!');
     return;
   }
 
@@ -32,13 +33,16 @@ const handleAssign = async (rider) => {
     });
 
     if (res.data.success) {
-      alert('✅ Rider Assigned & Parcel marked as "transit"');
+        Swal.fire('success', '✅ Rider Assigned & Parcel marked as "transit"', 'success');
+      
       onClose();
       refetchParcels?.();
     } else {
-      alert('❌ Failed to assign rider');
+       Swal.fire('Error!', '❌ Failed to assign rider', 'error');
+   
     }
   } catch (error) {
+    
     console.error(error);
   }
 };

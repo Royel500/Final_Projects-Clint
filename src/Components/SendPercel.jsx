@@ -55,7 +55,8 @@ const onSubmit = async (data) => {
       creation_date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       deliveryCost: cost,
       payment_status:'unpaid',
-     delivery_status:'transit',
+     delivery_status:'pending',
+     delivery_Boy:'Waiting',
     CreateBy: user?.email, 
 
     };

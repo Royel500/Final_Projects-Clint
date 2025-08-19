@@ -3,7 +3,7 @@ import React from 'react';
 import useAuth from './useAuth';
 
 const axiosSecure = axios.create({
-    baseURL:`http://localhost:3500`
+    baseURL:`http://https://assignment-12-server-indol-ten.vercel.app`
 })
 const useAxiosecure = () => {
     const { user } = useAuth();

@@ -31,41 +31,43 @@ const PendingRiders = () => {
     },
   });
 
-  // ✅ Delete mutation
-  const deleteMutation = useMutation({
-    mutationFn: (id) => axiosSecure.delete(`/riders/delete/${id}`),
-    onSuccess: (data) => {
-      if (data.data?.success) {
-        Swal.fire('Deleted!', 'Rider has been removed.', 'success');
-        queryClient.invalidateQueries(['pending-riders']);
-      } else {
-        Swal.fire('Error', data.data?.message || 'Failed to delete rider.', 'error');
-      }
-    },
-    onError: () => {
-      Swal.fire('Error', 'Server error occurred while deleting rider.', 'error');
-    },
-  });
+// ✅ Reject mutation
+const rejectMutation = useMutation({
+  mutationFn: (id) => axiosSecure.patch(`/riders/reject/${id}`),
+  onSuccess: (data) => {
+    if (data.data?.success) {
+      Swal.fire('Rejected!', 'Rider has been marked as rejected.', 'success');
+      queryClient.invalidateQueries(['pending-riders']);
+    } else {
+      Swal.fire('Error', data.data?.message || 'Failed to reject rider.', 'error');
+    }
+  },
+  onError: () => {
+    Swal.fire('Error', 'Server error occurred while rejecting rider.', 'error');
+  },
+});
 
-  const handleAccept = (id) => {
+const handleCancel = (id) => {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You are about to reject this rider.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, reject it!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      rejectMutation.mutate(id);
+    }
+  });
+};
+
+    const handleAccept = (id) => {
     acceptMutation.mutate(id);
   };
 
-  const handleCancel = (id) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, cancel it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteMutation.mutate(id);
-      }
-    });
-  };
+
 
   if (isLoading) return <div className="text-center text-lg">Loading...</div>;
 
@@ -105,9 +107,9 @@ const PendingRiders = () => {
                 <button
                   onClick={() => handleCancel(rider._id)}
                   className="btn btn-error btn-sm"
-                  disabled={deleteMutation.isLoading}
+                  disabled={rejectMutation.isLoading}
                 >
-                  Cancel
+                  Reject
                 </button>
               </td>
             </tr>
