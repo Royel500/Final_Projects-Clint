@@ -41,8 +41,8 @@ const cardData = [
 
 const ServiceCards = () => {
   return (
-    <div className="bg-[#04393d] py-10 px-4"> 
-    <div className='text-center text-white my-5'>
+    <div className=" py-10 px-4"> 
+    <div className='text-center my-5'>
         <h1 className='text-3xl font-bold'>
             Our Services
         </h1>
@@ -55,7 +55,8 @@ const ServiceCards = () => {
         {cardData.map((card, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-xl transition-all shadow-md p-6 text-center  duration-1000 hover:bg-fuchsia-300 hover:shadow-xl"
+            className="bg-gray-400 rounded-xl transition-all  p-6
+             text-center  duration-1000 hover:bg-gray-500 shadow-xl"
           >
             <div className="text-4xl mb-4">{card.icon}</div>
             <h3 className="text-xl font-semibold text-gray-800 mb-2">{card.title}</h3>

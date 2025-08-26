@@ -33,6 +33,8 @@ import RoleCheck from '../Components/RoleCkec';
 import AdminOverview from '../Components/AdminOverview';
 import UserProfile from '../Components/UserProfile';
 import AdminPaymentList from '../Payment/AdminPamentList';
+import Reviews from '../Pages/Home/Services/ReviewContainer';
+import ReviewContainer from '../Pages/Home/Services/Reviews';
 
 
 
@@ -54,6 +56,15 @@ import AdminPaymentList from '../Payment/AdminPamentList';
           path:'/about' ,
           element:<AboutUs></AboutUs>
         },
+        {
+          path:'/review',
+          element:<PrivateRoute>  <Reviews/> </PrivateRoute> 
+        },
+        {
+          path:'/postReview',
+          element: <ReviewContainer></ReviewContainer>
+        },
+   
         {
           path:'/pricing',
           element:<PricingCalculator></PricingCalculator>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ContactSection from '../Pages/Home/Services/Contact/ContactSection';
 
 const tabs = [
   { label: "Story", content: `We started with a simple promise — to make parcel delivery fast, reliable, and stress-free. Over the years, our commitment to real-time tracking, efficient logistics, and customer-first service has made us a trusted partner for thousands. Whether it's a personal gift or a time-sensitive business delivery, we ensure it reaches its destination — on time, every time.` },
@@ -11,8 +12,12 @@ const AboutUs = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div className="max-w-4xl mx-auto bg-green-100 px-5 py-10 
-    rounded-xl shadow-lg my-8">
+    <section>
+
+
+  
+    <div className="max-w-4xl mx-auto bg-base-300 px-5 py-5 
+    rounded-xl shadow-lg my-5">
       <h2 className="text-3xl font-semibold text-gray-800 mb-1">About Us</h2>
       <p className="text-sm text-gray-500 mb-6">
         Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle. From personal packages to business shipments — we deliver on time, every time.
@@ -41,7 +46,9 @@ const AboutUs = () => {
         <p>{tabs[activeTab].content}</p>
         <p>{tabs[activeTab].content}</p>
       </div>
-    </div>
+    </div> 
+              <ContactSection/>
+      </section>
   );
 };
 
