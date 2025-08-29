@@ -7,6 +7,8 @@ import { updateProfile } from 'firebase/auth';
 import GoogleLogIn from './GoogleLogIn';
 import axios from 'axios';
 import useAxios from '../../hooks/useAxios'; // your axios hook
+import confetti from 'canvas-confetti';
+
 
 const Register = () => {
   const { handleSubmit, register, formState: { errors } } = useForm();
@@ -42,39 +44,96 @@ const Register = () => {
   };
 
   // ✅ Form submit handler
-  const onSubmit = async (data) => {
-    const { email, password, displayName } = data;
+const onSubmit = async (data) => {
+  const { email, password, displayName } = data;
 
-    try {
-      const res = await createUser(email, password);
-      const loggedUser = res.user;
+  try {
+    const res = await createUser(email, password);
+    const loggedUser = res.user;
 
-      // ✅ Update Firebase profile
-      await updateProfile(loggedUser, {
-        displayName,
-        photoURL: photoURL || '',
-      });
+    // ✅ Update Firebase profile
+    await updateProfile(loggedUser, {
+      displayName,
+      photoURL: photoURL || '',
+    });
 
-      // ✅ Save user to MongoDB backend
-      const userInfo = {
-        uid: loggedUser.uid,
-        name: displayName,
-        email,
-        photoURL: photoURL || '',
-        role: 'user',
-        createdAt: new Date().toISOString(),
-      };
+    // ✅ Save user to MongoDB backend
+    const userInfo = {
+      uid: loggedUser.uid,
+      name: displayName,
+      email,
+      photoURL: photoURL || '',
+      role: 'user',
+      createdAt: new Date().toISOString(),
+    };
 
-      const userRes = await axiosIns.post('/api/users', userInfo);
-      console.log("User saved:", userRes.data);
-  
-      Swal.fire("Account Created!", "Welcome to the platform!", "success");
-      navigate('/');
-    } catch (err) {
-      console.error(err);
-      Swal.fire("Registration Failed", err.message || "Something went wrong", "error");
-    }
-  };
+    const userRes = await axiosIns.post('/api/users', userInfo);
+    console.log("User saved:", userRes.data);
+
+    // ✅ SweetAlert with confetti animation
+    Swal.fire({
+      title: "Account Created!",
+      text: "Welcome to the platform!",
+      icon: "success",
+      timer: 1500,
+      showConfirmButton: false,
+      willOpen: () => {
+        const duration = 1500;
+        const end = Date.now() + duration;
+
+        (function frame() {
+          confetti({
+            particleCount: 7,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            shapes: ['circle'],
+            colors: ['#ff69b4', '#ffb6c1', '#ffd700'],
+          });
+          confetti({
+            particleCount: 7,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            shapes: ['circle'],
+            colors: ['#ff69b4', '#ffb6c1', '#ffd700'],
+          });
+
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        })();
+      },
+    });
+
+    // Optional: voice message
+    const message = new SpeechSynthesisUtterance(
+      `Welcome ${displayName} to the platform!`
+    );
+    const voices = window.speechSynthesis.getVoices();
+    const femaleVoice = voices.find(
+      (voice) =>
+        voice.name.toLowerCase().includes("female") ||
+        voice.name.toLowerCase().includes("zira")
+    );
+    if (femaleVoice) message.voice = femaleVoice;
+    message.rate = 0.7;
+    message.pitch = 1;
+    message.volume = 0.8;
+    window.speechSynthesis.speak(message);
+
+    // Navigate after SweetAlert closes
+    setTimeout(() => navigate('/'), 1500);
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire(
+      "Registration Failed",
+      err.message || "Something went wrong",
+      "error"
+    );
+  }
+};
 
   return (
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl mx-auto">

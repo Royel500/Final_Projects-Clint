@@ -29,7 +29,7 @@ const Reviews = () => {
         {reviews.map((rev, idx) => (
           <div
             key={idx}
-            className="w-72 bg-white shadow-md rounded-xl p-4 flex-shrink-0"
+            className="w-72 h-35 bg-white shadow-md rounded-xl mx-2 p-4 flex-shrink-0"
           >
             <div className="flex items-center space-x-3 mb-3">
               <img

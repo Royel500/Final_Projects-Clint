@@ -3,22 +3,7 @@ import { FiMail, FiLinkedin, FiPhone, FiMessageSquare, FiMapPin } from 'react-ic
 
 const ContactInfo = () => {
   const contactItems = [
-    {
-      icon: <FiMail className=" text-xl" />,
-      title: "Email",
-      value: "webdev.royelali@gmail.com"
-    },
-    {
-      icon: <FiLinkedin className=" text-xl" />,
-      title: "LinkedIn",
-      value: "Connect with me",
-      link: "#" // Add your LinkedIn URL
-    },
-    {
-      icon: <FiPhone className=" text-xl" />,
-      title: "Phone",
-      value: "+88 01907226353"
-    },
+   
     {
       icon: <FiMessageSquare className=" text-xl" />,
       title: "WhatsApp",
@@ -26,9 +11,38 @@ const ContactInfo = () => {
       link: "https://wa.me/8801902264311"
     },
     {
+      icon: <FiMessageSquare className=" text-xl" />,
+      title: "Telegram",
+      value: "Telegram",
+      link: "https://t.me/itisroyel528"
+    },
+    {
+      icon: <FiMessageSquare className=" text-xl" />,
+      title: "Twitter",
+      value: "Twitter",
+      link: "https://x.com/royel528"
+    },
+     {
+      icon: <FiMail className=" text-xl" />,
+      title: "Email",
+      value: "webdev.royelali@gmail.com"
+    },
+
+    {
+      icon: <FiPhone className=" text-xl" />,
+      title: "Phone",
+      value: "+88 01907226353"
+    },
+        {
+      icon: <FiLinkedin className=" text-xl" />,
+      title: "LinkedIn",
+      value: "Connect with me",
+      link: "linkedin.com/in/md-royel-ali-b1ab45372" 
+    },
+    {
       icon: <FiMapPin className=" text-xl" />,
       title: "Location",
-      value: "Mouchak, Gazipur, Bangladesh"
+      value: " Dhaka, Bangladesh"
     }
   ];
 

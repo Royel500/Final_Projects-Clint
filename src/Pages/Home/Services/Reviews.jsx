@@ -62,7 +62,7 @@ const ReviewContainer = () => {
 
   return (
     <div className=" bg-white shadow-lg rounded-lg p-6">
-      <h2 className="text-2xl font-semibold mb-4">Write a Review</h2>
+      <h2 className="text-2xl font-semibold mb-4">Please plese plese give a Review !!</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
          <input
           type="number"

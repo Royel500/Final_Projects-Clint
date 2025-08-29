@@ -4,25 +4,98 @@ import Logo from '../Logo';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import './navbar.css'
+import useAxiosecure from '../../hooks/useAxiosecure';
+import confetti from 'canvas-confetti';
+
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const navigate = useNavigate();
- 
+ const axiosSecure = useAxiosecure();
 
 
-  const logOutt = () => {
-    logOut()
-      .then(() => {
-        Swal.fire({
-          title: "Logged out successfully!",
-          icon: "success",
+const logOutt = () => {
+  Swal.fire({
+    title: 'You are about to log out!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, log out!',
+    cancelButtonText: 'Cancel',
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        // Update lastLogout and set isActive = false
+        await axiosSecure.post('/api/users/activity', {
+          email: user.email,
+          isActive: false, // backend will automatically update lastLogout
         });
-        navigate('/');
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
+
+        // Perform logout
+        await logOut();
+
+        // SweetAlert success with confetti animation
+        Swal.fire({
+          title: 'Logged Out Successfully!',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
+          willOpen: () => {
+            const duration = 1500;
+            const end = Date.now() + duration;
+
+            (function frame() {
+              confetti({
+                particleCount: 7,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                shapes: ['circle'],
+                colors: ['#ff69b4', '#ffb6c1', '#ffd700'],
+              });
+              confetti({
+                particleCount: 7,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                shapes: ['circle'],
+                colors: ['#ff69b4', '#ffb6c1', '#ffd700'],
+              });
+
+              if (Date.now() < end) {
+                requestAnimationFrame(frame);
+              }
+            })();
+          },
+        });
+
+        // Optional: voice message
+        const message = new SpeechSynthesisUtterance(
+          'You have successfully logged out. See you again!'
+        );
+        const voices = window.speechSynthesis.getVoices();
+        const femaleVoice = voices.find(
+          (voice) =>
+            voice.name.toLowerCase().includes('female') ||
+            voice.name.toLowerCase().includes('zira')
+        );
+        if (femaleVoice) message.voice = femaleVoice;
+        message.rate = 0.7;
+        message.pitch = 1;
+        message.volume = 0.8;
+        window.speechSynthesis.speak(message);
+
+        // Navigate after short delay
+        setTimeout(() => navigate('/'), 1500);
+      } catch (error) {
+        Swal.fire({
+          title: 'Error',
+          text: error.message,
+          icon: 'error',
+        });
+      }
+    }
+  });
+};
+
 
   const navItems = (
     <>

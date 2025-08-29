@@ -20,7 +20,7 @@ const MyPercel = () => {
   const [selectedParcel, setSelectedParcel] = useState(null);
 
   const { data: parcels = [] } = useQuery({
-    queryKey: ['my-parcels', user.email],
+    queryKey: ['my-parcels', user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/sendPercel?email=${user?.email}`);
       return res.data;
@@ -68,82 +68,94 @@ const MyPercel = () => {
     });
   };
 
+
+
+
   return (
     <div className="overflow-x-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">My Parcels</h2>
-      <table className="table table-zebra w-full">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Type</th>
-            <th>Weight</th>
-            <th>Cost</th>
-            <th>Delivery_Status</th>
-            <th>Delivery_Boy</th>
-            <th>Payment</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {parcels?.map((parcel, index) => (
-            <tr key={parcel._id}>
-              <td>{index + 1}</td>
-              <td>{parcel.title}</td>
-              <td>
-                <span
-                  className={`badge ${
-                    parcel.parcelType === 'document'
-                      ? 'badge-info'
-                      : 'badge-warning'
-                  }`}
-                >
-                  {parcel.parcelType}
-                </span>
-              </td>
-              <td>{parcel.weight}kg</td>
-              <td>৳{parcel.deliveryCost}</td>
-              <td>{parcel.delivery_status}</td>
-              <td>{parcel.delivery_Boy}</td>
-              <td>
-                <span
-                  className={`badge ${
-                    parcel.payment_status === 'paid'
-                      ? 'badge-success'
-                      : 'badge-error'
-                  }`}
-                >
-                  {parcel.payment_status}
-                </span>
-              </td>
-              <td>
-                <div className="flex gap-1">
-                  <button
-                    onClick={() => handleView(parcel._id)}
-                    className="btn btn-xs btn-outline btn-info"
-                  >
-                    View
-                  </button>
+   <table className="table table-zebra w-full">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Type</th>
+      <th>Weight</th>
+      <th>Cost</th>
+      <th>Delivery_Status</th>
+      <th>Delivery_Boy</th>
+      <th>Payment</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {parcels && parcels.length > 0 ? (
+      parcels.map((parcel, index) => (
+        <tr key={parcel._id}>
+          <td>{index + 1}</td>
+          <td>{parcel.title}</td>
+          <td>
+            <span
+              className={`badge ${
+                parcel.parcelType === 'document'
+                  ? 'badge-info'
+                  : 'badge-warning'
+              }`}
+            >
+              {parcel.parcelType}
+            </span>
+          </td>
+          <td>{parcel.weight}kg</td>
+          <td>৳{parcel.deliveryCost}</td>
+          <td>{parcel.delivery_status}</td>
+          <td>{parcel.delivery_Boy}</td>
+          <td>
+            <span
+              className={`badge ${
+                parcel.payment_status === 'paid'
+                  ? 'badge-success'
+                  : 'badge-error'
+              }`}
+            >
+              {parcel.payment_status}
+            </span>
+          </td>
+          <td>
+            <div className="flex gap-1">
+              <button
+                onClick={() => handleView(parcel._id)}
+                className="btn btn-xs btn-outline btn-info"
+              >
+                View
+              </button>
 
-                  <button
-                    onClick={() => handlePay(parcel._id)}
-                    className="btn btn-xs btn-outline btn-warning"
-                  >
-                    Pay
-                  </button>
+              <button
+                onClick={() => handlePay(parcel._id)}
+                className="btn btn-xs btn-outline btn-warning"
+              >
+                Pay
+              </button>
 
-                  <button
-                    onClick={() => handleDelete(parcel._id)}
-                    className="btn btn-xs btn-outline btn-error"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              <button
+                onClick={() => handleDelete(parcel._id)}
+                className="btn btn-xs btn-outline btn-error"
+              >
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan={9} className="text-center text-lg py-4">
+          No parcels sent yet.
+        </td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
 
       {/* View Parcel Modal */}
       {isViewModalOpen && selectedParcel && (
@@ -170,6 +182,19 @@ const MyPercel = () => {
             <p>
               <strong>Cost:</strong> ৳{selectedParcel.deliveryCost}
             </p>
+
+        {selectedParcel.receiverContact ? (
+            <p>
+              <strong>Receiver Contact:</strong> {selectedParcel.receiverContact}
+            </p>
+          ) : (
+            <p>
+              <strong>Sender Contact:</strong> {selectedParcel.senderContact}
+            </p>
+          )}
+
+          
+
             <p>
               <strong>Status:</strong> {selectedParcel.delivery_status}
             </p>

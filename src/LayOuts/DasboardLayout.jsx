@@ -116,6 +116,11 @@ const DasboardLayout = () => {
               <FaUserFriends className="text-lg" /> Manage profile
             </NavLink>
           </li>
+            <li>
+            <NavLink to="/dasboard/manageUser" className="flex items-center gap-2">
+              <FaUserFriends className="text-lg" /> Manage Users
+            </NavLink>
+          </li>
                 <li>
             <NavLink to="/dasboard/adminPaymentList" className="flex items-center gap-2">
               <FaHistory className="text-lg" />Payment History

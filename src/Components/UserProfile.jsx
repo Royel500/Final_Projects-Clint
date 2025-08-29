@@ -21,7 +21,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await axiosSecure.get(`/users/${user?.email}`);
+        const res = await axiosSecure.get(`/usersss/${user?.email}`);
         setUserData(res.data);
         setFormData({
           name: res.data.name,

@@ -35,6 +35,7 @@ import UserProfile from '../Components/UserProfile';
 import AdminPaymentList from '../Payment/AdminPamentList';
 import Reviews from '../Pages/Home/Services/ReviewContainer';
 import ReviewContainer from '../Pages/Home/Services/Reviews';
+import ManageUsers from '../Components/ManageUsers';
 
 
 
@@ -136,8 +137,12 @@ import ReviewContainer from '../Pages/Home/Services/Reviews';
     element: <AdminRoute>  <ActiveRiders></ActiveRiders></AdminRoute>
   },
   {
+    path:'manageUser',
+    element: <AdminRoute> <ManageUsers></ManageUsers>   </AdminRoute>
+  },
+  {
     path:'adminPaymentList',
-    element: <AdminRoute>  <AdminPaymentList></AdminPaymentList>  </AdminRoute>
+    element: <AdminRoute> <AdminPaymentList></AdminPaymentList>  </AdminRoute>
   },
   {
     path:'pendingRider',
