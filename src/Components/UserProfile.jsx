@@ -50,19 +50,23 @@ const UserProfile = () => {
     }));
   };
 
- const handleSave = async () => {
+const handleSave = async () => {
   try {
-    await axiosSecure.patch(`/users/update/${user?.email}`, formData);
-    // Fetch the full, updated user profile
-    const res = await axiosSecure.get(`/users/${user?.email}`);
-    setUserData(res.data);
+    const res = await axiosSecure.patch(`/users/update/${user?.email}`, formData);
+    // Use the backend message for SweetAlert
     setIsEditing(false);
-    Swal.fire('Success', 'Profile updated successfully!', 'success');
+    Swal.fire('Success', res.data.message || 'Profile updated successfully!', 'success');
+
+    // Refresh profile data
+    const profileRes = await axiosSecure.get(`/usersss/${user?.email}`);
+    setUserData(profileRes.data);
+
   } catch (error) {
     console.error('Update error:', error);
     Swal.fire('Error', error.response?.data?.message || 'Failed to update profile', 'error');
   }
 };
+
 
   if (loading) return <Loading />;
   if (!userData) return <div className="text-center py-10">No user data found</div>;

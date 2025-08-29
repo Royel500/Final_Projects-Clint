@@ -92,9 +92,17 @@ const DasboardLayout = () => {
           {!roleLoading && role === 'rider' && 
           <>
 <li>
+  
             <NavLink to="/dasboard/manageProfile" className="flex items-center gap-2">
               <FaMapMarkedAlt className="text-lg" /> Manage Profile   </NavLink>
           </li>
+<li>
+  
+            <NavLink to="/dasboard/riderEarnning" className="flex items-center gap-2">
+              <FaMapMarkedAlt className="text-lg" />Complte Task  </NavLink>
+          </li>
+
+
           <li>
   <NavLink to="/dasboard/pendingDelivery" className="flex items-center gap-2">
     <FaTruck className="text-lg" /> Pending Delivery

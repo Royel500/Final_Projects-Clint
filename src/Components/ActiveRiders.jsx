@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosecure from '../hooks/useAxiosecure';
-import useAuth from '../hooks/useAuth';
+// import useAuth from '../hooks/useAuth';
 import Swal from 'sweetalert2';
 
 const ActiveRiders = () => {
   const axiosSecure = useAxiosecure();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   
   const [riders, setRiders] = useState([]);
 
@@ -36,7 +36,7 @@ const ActiveRiders = () => {
         await axiosSecure.delete(`/riders/delete/${id}`);
         Swal.fire('Cancelled!', 'Rider has been rejected.', 'info');
         setRiders(prev => prev.filter(r => r._id !== id));
-      } catch (error) {
+      } catch {
         Swal.fire('Error', 'Failed to cancel rider.', 'error');
       }
     }
@@ -67,7 +67,7 @@ const ActiveRiders = () => {
             <td>{rider.email}</td>
             <td>{rider.bikeRegistration}</td>
             <td>{rider.bikeBrand}</td>
-            <td className='text-red-700 italic font-bold'>
+            <td className='text-green-700 italic font-bold'>
               {rider.status}
             </td>
             <td>

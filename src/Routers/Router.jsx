@@ -36,6 +36,7 @@ import AdminPaymentList from '../Payment/AdminPamentList';
 import Reviews from '../Pages/Home/Services/ReviewContainer';
 import ReviewContainer from '../Pages/Home/Services/Reviews';
 import ManageUsers from '../Components/ManageUsers';
+import ComppleteEarnning from '../Components/ComppleteEarnning';
 
 
 
@@ -118,6 +119,10 @@ import ManageUsers from '../Components/ManageUsers';
   {
     path:'myPercel',
     element:<MyPercel></MyPercel>
+  },
+  {
+    path:'riderEarnning',
+    element:<ComppleteEarnning></ComppleteEarnning>
   },
   {
     path:'payment/:parcelId',

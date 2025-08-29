@@ -202,6 +202,9 @@ const MyPercel = () => {
               <strong>Delivery Boy:</strong> {selectedParcel.delivery_Boy}
             </p>
             <p>
+              <strong>Delivery Boy contact:</strong> {selectedParcel.delivery_boy_email}
+            </p>
+            <p>
               <strong>Payment:</strong> {selectedParcel.payment_status}
             </p>
           </div>

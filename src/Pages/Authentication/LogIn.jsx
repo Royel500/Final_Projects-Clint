@@ -12,7 +12,7 @@ const LogIn = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+                 
   const { signIn, resetPassword } = useAuth();
 
   const navigate = useNavigate();
@@ -86,25 +86,25 @@ const onSubmitt = (data) => {
 };
 
 
-  const handleForgotPassword = async () => {
-    const { value: email } = await Swal.fire({
-      title: 'Enter your email',
-      input: 'email',
-      inputLabel: 'We will send a reset link',
-      inputPlaceholder: 'Enter your email address',
-      showCancelButton: true,
-    });
+const handleForgotPassword = async () => {
+  const { value: email } = await Swal.fire({
+    title: 'Enter your email',
+    input: 'email',
+    inputLabel: 'We will send a reset link',
+    inputPlaceholder: 'Enter your email address',
+    showCancelButton: true,
+  });
 
-    if (email) {
-      resetPassword(email)
-        .then(() => {
-          Swal.fire('Success!', 'Check your email for reset instructions.', 'success');
-        })
-        .catch((err) => {
-          Swal.fire('Error!', err.message, 'error');
-        });
-    }
-  };
+  if (email) {
+    resetPassword(email)
+      .then(() => {
+        Swal.fire('Success!', 'Check your spam folder in email for reset instructions.', 'success');
+      })
+      .catch((err) => {
+        Swal.fire('Error!', err.message, 'error');
+      });
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">

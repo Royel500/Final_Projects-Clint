@@ -251,7 +251,7 @@ const handleRoleChange = async (newRole, email) => {
       {/* All Users Table */}
       <h3 className="text-xl font-semibold mb-2">All Users</h3>
       <div className="overflow-x-auto">
-        <table className="table w-full border">
+        <table className="table w-full">
           <thead>
             <tr>
               <th>#</th>
