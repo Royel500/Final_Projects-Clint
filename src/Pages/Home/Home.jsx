@@ -14,7 +14,6 @@ const Home = () => {
             <Reviews></Reviews>
             <ServiceCards></ServiceCards>
              <RMarquee></RMarquee>
-         
             <FeatureCards></FeatureCards>
             <MegaCard></MegaCard>
                <div className=' max-w-4xl mx-auto mt-10'>

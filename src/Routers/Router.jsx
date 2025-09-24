@@ -39,6 +39,7 @@ import ManageUsers from '../Components/ManageUsers';
 import ComppleteEarnning from '../Components/ComppleteEarnning';
 import Error from '../ShearCom/Error';
 import Messenger from '../Components/Message/MessageLayout';
+import AiHelpDesk from '../Components/aihelp/AiHelpDesk';
 
 
 
@@ -60,6 +61,10 @@ import Messenger from '../Components/Message/MessageLayout';
         {
           path:'/about' ,
           element:<AboutUs></AboutUs>
+        },
+        {
+          path:'/help' ,
+          element:<AiHelpDesk></AiHelpDesk>
         },
         {
           path:'/review',
