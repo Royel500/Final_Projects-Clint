@@ -37,6 +37,8 @@ import Reviews from '../Pages/Home/Services/ReviewContainer';
 import ReviewContainer from '../Pages/Home/Services/Reviews';
 import ManageUsers from '../Components/ManageUsers';
 import ComppleteEarnning from '../Components/ComppleteEarnning';
+import Error from '../ShearCom/Error';
+import Messenger from '../Components/Message/MessageLayout';
 
 
 
@@ -45,6 +47,7 @@ import ComppleteEarnning from '../Components/ComppleteEarnning';
   {
     path: "/",
     element: <RootLayout></RootLayout>,
+     errorElement:<Error></Error>,
     children:[
         {
             index:true,
@@ -76,7 +79,7 @@ import ComppleteEarnning from '../Components/ComppleteEarnning';
       },
       {
         path:'/sendpercel' ,
-        element:<SendPercel></SendPercel>
+        element:<PrivateRoute> <SendPercel/> </PrivateRoute>
       },
       {
         path:'/rider',
@@ -103,6 +106,7 @@ import ComppleteEarnning from '../Components/ComppleteEarnning';
     element:<PrivateRoute>
       <DasboardLayout></DasboardLayout>
     </PrivateRoute>,
+    errorElement:<Error></Error>,
  children:[
   {
     index:true,
@@ -115,6 +119,10 @@ import ComppleteEarnning from '../Components/ComppleteEarnning';
   {
   path:'manageProfile',
   element:<UserProfile/>
+  },
+  {
+  path:'message',
+  element:<Messenger></Messenger>
   },
   {
     path:'myPercel',

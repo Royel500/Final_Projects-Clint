@@ -64,8 +64,8 @@ const onSubmitt = (data) => {
       const voices = window.speechSynthesis.getVoices();
       const femaleVoice = voices.find(
         (voice) =>
-          voice.name.toLowerCase().includes('female') ||
-          voice.name.toLowerCase().includes('zira')
+          voice.name.toLowerCase().includes('female') 
+          
       );
       if (femaleVoice) message.voice = femaleVoice;
       message.rate = 0.7;

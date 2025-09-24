@@ -25,7 +25,7 @@ const logOutt = () => {
       try {
         // Update lastLogout and set isActive = false
         await axiosSecure.post('/api/users/activity', {
-          email: user.email,
+          email: user?.email,
           isActive: false, // backend will automatically update lastLogout
         });
 
@@ -100,12 +100,15 @@ const logOutt = () => {
   const navItems = (
     <>
       <li><NavLink to="/">Home</NavLink></li>
-      <li><NavLink to="/about">About Us</NavLink></li>
+            <li><NavLink to="/dasboard">Dasboard</NavLink></li>
+          <li><NavLink to="/sendpercel">Send Percel</NavLink></li>
+                    <li><NavLink to="/services">Service</NavLink></li>
+                          <li><NavLink to="/about">About Us</NavLink></li>
+
+
       {user && (
         <>
-          <li><NavLink to="/services">Service</NavLink></li>
-          <li><NavLink to="/dasboard">Dasboard</NavLink></li>
-          <li><NavLink to="/sendpercel">Send Percel</NavLink></li>
+    
           <li><NavLink to="/track">Track Order</NavLink></li>
           <li><NavLink to="/pricing">Pricing</NavLink></li>
           <li><NavLink to="/rider">Be a Rider</NavLink></li>

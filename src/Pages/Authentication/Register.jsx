@@ -196,7 +196,9 @@ const onSubmit = async (data) => {
         </div>
       </form>
 
-      <GoogleLogIn />
+            <div className="px-6 pb-4">
+          <GoogleLogIn />
+        </div>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import { useLocation, useNavigate } from 'react-router';
 import useAxios from '../../hooks/useAxios';
+import confetti from 'canvas-confetti';
 
 const GoogleLogIn = () => {
   const navigate = useNavigate();
@@ -10,39 +11,68 @@ const GoogleLogIn = () => {
   const from = location.state?.from || '/';
   const { googleMama } = useAuth();
   const axiosIns = useAxios();
+const handleGoole = () => {
+  googleMama()
+    .then(async (res) => {
+      const user = res.user;
 
-  const handleGoole = () => {
-    googleMama()
-      .then(async (res) => {
-        const user = res.user;
+      // Save user to MongoDB backend
+      const userInfo = {
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL || '',
+        role: 'user',
+        createdAt: new Date().toISOString(),
+      };
 
-        // Save user to MongoDB backend
-        const userInfo = {
-          uid: user.uid,
-          name: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL || '',
-          role: 'user',
-          createdAt: new Date().toISOString(),
-        };
+      await axiosIns.post('/api/users', userInfo);
 
-        await axiosIns.post('/api/users', userInfo);
+      // 🎉 Success SweetAlert with confetti
+      Swal.fire({
+        title: "Login Successful!",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+        willOpen: () => {
+          const duration = 1500;
+          const end = Date.now() + duration;
 
-        Swal.fire({
-          title: "Login Successful!",
-          icon: "success",
-          draggable: true
-        });
-        navigate(from);
-      })
-      .catch(err => {
-        Swal.fire({
-          title: "Error",
-          text: err.message,
-          icon: "error"
-        });
+          (function frame() {
+            confetti({
+              particleCount: 7,
+              angle: 60,
+              spread: 55,
+              origin: { x: 0 },
+              shapes: ['circle'],
+              colors: ['#ff69b4', '#ffb6c1', '#ffd700'],
+            });
+            confetti({
+              particleCount: 7,
+              angle: 120,
+              spread: 55,
+              origin: { x: 1 },
+              shapes: ['circle'],
+              colors: ['#ff69b4', '#ffb6c1', '#ffd700'],
+            });
+
+            if (Date.now() < end) requestAnimationFrame(frame);
+          })();
+        },
       });
-  };
+
+      // Navigate after SweetAlert closes
+      setTimeout(() => navigate(from), 1500);
+    })
+    .catch((err) => {
+      Swal.fire({
+        title: "Error",
+        text: err.message,
+        icon: "error",
+      });
+    });
+};
+
 
   return (
     <div className='text-center'>

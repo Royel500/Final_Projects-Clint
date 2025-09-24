@@ -67,6 +67,11 @@ const DasboardLayout = () => {
               <FaBoxOpen className="text-lg" /> My Parcels
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/dasboard/message" className="flex items-center gap-2">
+              <FaBoxOpen className="text-lg" /> Message
+            </NavLink>
+          </li>
     
           <li>
             <NavLink to="/dasboard/track" className="flex items-center gap-2">
